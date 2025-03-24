@@ -1,0 +1,10 @@
+8
+S
+S -> A B C | D E
+A -> a | B C | epsilon
+B -> b | C D | epsilon
+C -> c | D E
+D -> d | E F
+E -> e | F G
+F -> f | G H
+G -> g | H I  

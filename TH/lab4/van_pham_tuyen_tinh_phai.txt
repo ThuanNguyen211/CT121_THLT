@@ -1,0 +1,4 @@
+V={S,A,B}
+T={a,b}
+S=S
+P=[S->Aa;A->Bb;B->a]
