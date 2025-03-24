@@ -118,6 +118,8 @@ def convert_to_cnf(grammar, terminal):
     # Chuyển đổi các quy tắc có ký tự terminal
     for left, productions in grammar.items():
         for prod in productions:
+            if len(prod) == 1 and prod[0].islower():
+                continue
             for i in range(len(prod)):
                 if prod[i].islower():
                     position = terminal.index(prod[i])
