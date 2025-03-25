@@ -3,6 +3,7 @@ from tkinter import ttk, scrolledtext, filedialog
 import os
 import time
 import gc # Garbage collection
+import copy
 
 def read_grammar(filename):
     """
@@ -29,6 +30,8 @@ def read_grammar(filename):
     
         for left, productions in grammar.items():
             for prod in productions:
+                if prod == ['epsilon']:
+                    continue
                 for symbol in prod:
                     if symbol.islower():
                         terminal.add(symbol)
@@ -115,18 +118,17 @@ def convert_to_cnf(grammar, terminal):
     BĐ1: Chuyển đổi các quy tắc có ký tự terminal
     BĐ2: Chuyển đổi các quy tắc có độ dài lớn hơn 2
     """
-    # Chuyển đổi các quy tắc có ký tự terminal
-    for left, productions in grammar.items():
+    print(grammar)
+    # Thay thế các ký tự terminal trong các quy tắc
+    for left, productions in list(grammar.items()):
         for prod in productions:
-            if len(prod) == 1 and prod[0].islower():
-                continue
-            for i in range(len(prod)):
-                if prod[i].islower():
-                    position = terminal.index(prod[i])
-                    prod[i] = f'S{position}'
-    for i in range(len(terminal)):
-        grammar[f'S{i}'] = [[terminal[i]]]
-    
+            if len(prod) > 1:
+                for i, symbol in enumerate(prod):
+                    if symbol in terminal and symbol.islower():
+                        new_symbol = f'S{terminal.index(symbol)}'
+                        grammar[new_symbol] = [[symbol]]
+                        prod[i] = new_symbol
+    print(grammar)
     # Chuyển đổi các quy tắc có độ dài lớn hơn 2
     new_grammar = {}
     new_symbols = 0
@@ -152,7 +154,7 @@ def convert_to_cnf(grammar, terminal):
                     new_symbol = get_new_symbol('X')
                     new_prod.append([prod[i + 1], prod[i + 2]])
                     current = new_symbol
-                new_productions.append([prod[-1], current])
+                new_productions.append([prod[0], current])
         new_grammar[left] = new_productions
     for i in range(len(new_prod)):
         new_grammar[get_sybol('X', i+1)] = [new_prod[i]]
