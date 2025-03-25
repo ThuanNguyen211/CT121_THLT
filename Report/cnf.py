@@ -31,8 +31,8 @@ def read_grammar(filename):
             for prod in productions:
                 for symbol in prod:
                     if symbol.islower():
-                        terminal.add(symbol)   
-    terminal = sorted(terminal)
+                        terminal.add(symbol)
+    terminal = sorted(terminal) # Sắp xếp và chuyển thành list
     return grammar, start, terminal
 
 def print_grammar_to_string(grammar):
