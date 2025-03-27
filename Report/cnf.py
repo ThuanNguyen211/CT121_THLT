@@ -80,7 +80,7 @@ def eliminate_useless(grammar, start):
 
 def eliminate_epsilon(grammar, start):
     """
-    Loại bỏ các quy tắc epsilon (ε)
+    Loại bỏ các quy tắc epsilon (ε) 
     """
     # Tạo ngữ pháp mới không có ε
     new_grammar = {}
@@ -118,7 +118,6 @@ def convert_to_cnf(grammar, terminal):
     BĐ1: Chuyển đổi các quy tắc có ký tự terminal
     BĐ2: Chuyển đổi các quy tắc có độ dài lớn hơn 2
     """
-    print(grammar)
     # Thay thế các ký tự terminal trong các quy tắc
     for left, productions in list(grammar.items()):
         for prod in productions:
@@ -128,7 +127,7 @@ def convert_to_cnf(grammar, terminal):
                         new_symbol = f'S{terminal.index(symbol)}'
                         grammar[new_symbol] = [[symbol]]
                         prod[i] = new_symbol
-    print(grammar)
+    
     # Chuyển đổi các quy tắc có độ dài lớn hơn 2
     new_grammar = {}
     new_symbols = 0
